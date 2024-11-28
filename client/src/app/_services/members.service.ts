@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Member } from '../_models/member';
-import { AccountService } from './account.service';
+import { Member, PowerUserTiers } from '../_models/member';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -9,22 +8,17 @@ import { environment } from '../../environments/environment';
 })
 export class MembersService {
   private http = inject(HttpClient);
-  private accountService = inject(AccountService);
   baseUrl = environment.apiUrl;
 
   getMembers() {
-    return this.http.get<Member[]>(this.baseUrl + 'users', this.getHttpOptions());
+    return this.http.get<Member[]>(this.baseUrl + 'users');
   }
 
   getMember(username: string) {
-    return this.http.get<Member>(this.baseUrl + 'users/' + username, this.getHttpOptions())
+    return this.http.get<Member>(this.baseUrl + 'users/' + username)
   }
 
-  getHttpOptions() {
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${this.accountService.currentUser()?.token}`
-      })       
-    }
+  getPowerUsers(){
+    return this.http.get<PowerUserTiers[]>(this.baseUrl + 'users' + '/powerUsers');
   }
 }

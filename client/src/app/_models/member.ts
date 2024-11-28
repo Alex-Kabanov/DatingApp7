@@ -16,3 +16,16 @@ export interface Member {
     country: string
     photo: Photo[]
   }
+
+export interface PowerUserTiers {
+ userId: number,
+ email: string,
+ firstName: string,
+ lastName: string,
+ attributeValie: string,
+ available: string[];
+ selectedTier: string;
+}
+
+
+
