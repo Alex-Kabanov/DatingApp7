@@ -1,0 +1,70 @@
+<div class="row">
+    @for (member of members; track member.id) {
+        <div class="col-2">
+            <app-member-card [member]="member"></app-member-card>
+        </div>
+    }
+</div>
+
+
+
+<div class="component-root">
+  <header>
+      <h2>Manage Power User Tiers</h2>
+  </header>
+  <section>
+      <table mat-table [dataSource]="powerUsersTiers" class="mat-elevation-z8">
+          <!-- User ID Column -->
+          <ng-container matColumnDef="userId">
+              <th mat-header-cell *matHeaderCellDef> User ID </th>
+              <td mat-cell *matCellDef="let user"> {{ user.userId }} </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> Email </th>
+              <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+          </ng-container>
+
+          <!-- First Name Column -->
+          <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef> First Name </th>
+              <td mat-cell *matCellDef="let user"> {{ user.firstName }} </td>
+          </ng-container>
+
+          <!-- Last Name Column -->
+          <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef> Last Name </th>
+              <td mat-cell *matCellDef="let user"> {{ user.lastName }} </td>
+          </ng-container>
+
+          <!-- Current Tier Column -->
+          <ng-container matColumnDef="currentTier">
+              <th mat-header-cell *matHeaderCellDef> Current Tier </th>
+              <td mat-cell *matCellDef="let user"> {{ user.attributeValue }} </td>
+          </ng-container>
+
+          <!-- Available Tiers Dropdown Column -->
+          <ng-container matColumnDef="changeTier">
+              <th mat-header-cell *matHeaderCellDef> Change Tier </th>
+              <td mat-cell *matCellDef="let user">
+                  <mat-form-field appearance="fill">
+                      <mat-label>Change Tier</mat-label>
+                      <mat-select [(value)]="user.selectedTier">
+                          <mat-option *ngFor="let tier of user.availableTiers" [value]="tier">
+                              {{ tier }}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </td>
+          </ng-container>
+
+          <!-- Header and Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </section>
+  <section>
+      <button mat-raised-button color="primary" (click)="updateUserTiers()">Update Tiers</button>
+  </section>
+</div>
